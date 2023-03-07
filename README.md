@@ -1,1 +1,1 @@
-Sziasztok!
+Sziasztok! Az adatbázis készülőben.
