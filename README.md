@@ -1,1 +1,1 @@
-Sziasztok! Az adatbázis készülőben.
+Sziasztok! Azt szeretném mondani, hogy a március 9.-i nappal elkészült az adatbázis.
