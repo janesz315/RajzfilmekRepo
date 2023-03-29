@@ -1,50 +1,107 @@
 
-### get all cars
-get http://localhost:3000/cars
+### get all cartoons
+get http://localhost:3000/cartoons
 
 
-### get car by id
-get http://localhost:3000/cars/10022
+### get cartoons by id
+get http://localhost:3000/cartoons/10
 
 
-### sql injections
-### get users tábla információk
-get http://localhost:3000/cars/2 UNION SELECT *, '' FROM users
 
-### get mi az adatbázis neve
-get http://localhost:3000/cars/2  UNION SELECT database(), '','',''
-
-### get milyen táblák vannak
-get http://localhost:3000/cars/222  UNION select table_name, '','','' from information_schema.tables where table_schema='taxi6'
-
-### get milyen oszlopai vannak a users táblának
-get http://localhost:3000/cars/222 UNION select column_name,'', '','' from information_schema.columns where table_name='users' and table_schema='taxi6'
-
-### post car
-post http://localhost:3000/cars
+### post cartoon
+post http://localhost:3000/cartoons
 Content-Type: application/json
 
 {
-    "name": "Trabant <h2>valami</h2>",
-    "licenceNumber": "TT809",
-    "hourlyRate": "20036 éélkjéklj"
+    "name": "Miraculous: Tales of Ladybug & Cat Noir",
+    "numberOfSeasons": 5,
+    "numberOfEpisodes": 100,
+    "countriesId": 2,
+    "creatorsId": 1,
+    "runningTime": 22,
+    "AiringStart": "2006-09-10T22:00:00.000Z",
+    "AiringEnd": "2009-11-21T23:00:00.000Z"
 }
 
-### delete car by id
-delete http://localhost:3000/cars/1002
+### delete cartoon by id
+delete http://localhost:3000/cartoons/13
 
-### put car
-put http://localhost:3000/cars/1002
+### put cartoon
+put http://localhost:3000/cartoons/17
 Content-Type: application/json
 
 {
-    "name": "<h1>Trabant3</h1>",
-    "licenceNumber": "TT809",
-    "hourlyRate": 20036
+    "name": "Corn King",
+    "numberOfSeasons": 3,
+    "numberOfEpisodes": 35,
+    "countriesId": 8,
+    "creatorsId": 11,
+    "runningTime": 45,
+    "AiringStart": "2008-10-23",
+    "AiringEnd": "2013-08-21"
 }
 
 
 ###
-### get all trips
-get http://localhost:3000/trips
+### get all countries
+get http://localhost:3000/countries
+
+
+
+
+### get countries by id
+get http://localhost:3000/countries/10
+
+
+
+### post country
+post http://localhost:3000/countries
+Content-Type: application/json
+
+{
+    "name":"Bangladesh"
+}
+
+### delete country by id
+delete http://localhost:3000/countries/7
+
+### put country
+put http://localhost:3000/countries/12
+Content-Type: application/json
+
+{
+    "name": "Costa Rica"
+}
+
+
+### get all creators
+get http://localhost:3000/creators
+
+
+
+
+### get creators by id
+get http://localhost:3000/creators/10
+
+
+
+### post creator
+post http://localhost:3000/creators
+Content-Type: application/json
+
+{
+    "name":"Brad Collins"
+}
+
+### delete creators by id
+delete http://localhost:3000/creators/7
+
+### put creators
+put http://localhost:3000/creators/11
+Content-Type: application/json
+
+{
+    "name": "Diego Velázquez"
+    
+}
 
