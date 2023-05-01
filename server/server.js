@@ -15,9 +15,11 @@ const {
   sendingDelete,
   sendingInfo,
 } = require("./config/sending.js");
+const cors = require("cors")
 
 //#region middlewares
 app.use(express.json());
+app.use(cors())
 //#endregion middlewares
 
 //#region cartoons
