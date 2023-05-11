@@ -2,6 +2,36 @@ const contentBox = document.getElementById("contentBox");
 const modalContent = document.getElementById("modalContent");
 const modalTitle = document.getElementById("modalTitle");
 
+
+class Cartoon {
+  constructor(
+    name = null,
+    numberOfSeasons = null,
+    numberOfEpisodes = null,
+    runningTime = null,
+    countriesId = null,
+    creatorsId = null,
+    AiringStart = null,
+    AiringEnd = null
+    
+  ) {
+    this.name = name;
+    this.numberOfSeasons = numberOfSeasons;
+    this.numberOfEpisodes = numberOfEpisodes;
+    this.runningTime = runningTime;
+    this.countriesId = countriesId;
+    this.creatorsId = creatorsId;
+    this.AiringStart= AiringStart;
+    this.AiringEnd = AiringEnd;
+
+  }
+}
+
+let editableCartoon = new Cartoon();
+let state = "view";
+let selectedCartoonId = null;
+let loadedCartoonId = null;
+
 function getHome() {
     let htmlElement = `
       <h1>Home</h1>
@@ -444,4 +474,230 @@ async function onClickCardButton3(id) {
     `;
   modalContent.innerHTML = htmlElement;
   modalTitle.innerHTML = "Content of creators:";
+}
+
+
+
+async function onClickNewButton() {
+  state = "new";
+  modalTitle.innerHTML = "A new record of a cartoon";
+  buttonShowHide("saveButton", true);
+  const url = "http://localhost:3000/cartoons";
+  const response = await fetch(url);
+  const data = await response.json();
+  const cartoon = data.data
+  
+  
+
+  let htmlElement = `
+    <div class="col-12">
+        <label for="name" class="form-label">The cartoon name:</label>
+        <input type="text" class="form-control" id="name">
+    </div>
+    
+    <div class="col-6">
+        <label for="numberOfSeasons" class="form-label">Number of Seasons:</label>
+        <input type="number" class="form-control" id="numberOfSeasons">
+    </div>
+    <div class="col-5">
+        <label for="numberOfEpisodes" class="form-label">Number of episodes:</label>
+        <input type="number" class="form-control" id="numberOfEpisodes">
+    </div>
+    <div class="col-5">
+        <label for="runningTime" class="form-label">Running time (of one episode):</label>
+        <input type="number" class="form-control" id="runningTime">
+    </div>
+    <div class="col-5">
+        <label for="AiringStart" class="form-label">When it started:</label>
+        <input type="date" class="form-control" id="AiringStart">
+    </div>
+    <div class="col-5">
+        <label for="AiringEnd" class="form-label">When it ended:</label>
+        <input type="date" class="form-control" id="AiringEnd">
+    </div>
+    <div class="col-5">
+        <label for="countriesId" class="form-label">Country ID:</label>
+        <input type="number" class="form-control" id="countriesId">
+    </div>
+    <div class="col-5">
+        <label for="creatorsId" class="form-label">Creator ID:</label>
+        <input type="number" class="form-control" id="creatorsId">
+    
+    
+
+    
+    `;
+  
+  
+  
+
+  //vége
+  htmlElement += `</div>`;
+
+  modalContent.innerHTML = htmlElement;
+}
+
+function onClickDeleteButton(id) {
+  state = "delete";
+  modalTitle.innerHTML = "Car deletion";
+  modalContent.innerHTML = "Do you really want that?";
+  buttonShowHide("yesButton", true);
+  selectedCartoonId = id;
+}
+
+async function onClickEditButton(id) {
+  //sofőrök beolvasása -> drivers
+  let url = "http://localhost:3000/cartoons";
+  let response = await fetch(url);
+  let data = await response.json();
+  const drivers = data.data;
+
+  state = "edit";
+  modalTitle.innerHTML = "You are currently editing the cartoon";
+  buttonShowHide("saveButton", true);
+
+  let htmlElement = `
+  <div class="col-12">
+      <label for="name" class="form-label">Autó neve:</label>
+      <input type="text" class="form-control" id="name">
+  </div>
+  
+  <div class="col-6">
+      <label for="licenceNumber" class="form-label">Rendszám:</label>
+      <input type="text" class="form-control" id="licenceNumber">
+  </div>
+  <div class="col-5">
+      <label for="hourlyRate" class="form-label">Tarifa (Ft/óra):</label>
+      <input type="number" class="form-control" id="hourlyRate">
+  </div>
+  
+
+  <div class="form-check col-6">
+      <input class="form-check-input" type="checkbox" value="" id="outOfTraffic">
+      <label class="form-check-label" for="outOfTraffic">
+      Forgamon kívül
+      </label>
+  </div>
+
+  <select class="form-select" aria-label="Default select example" id="driverId">
+      <option value="null">Nincs sofőr</option>
+  `;
+  // ciklus
+  for (const driver of drivers) {
+    htmlElement += `<option value="${driver.id}">${driver.driverName}</option>`;
+  }
+
+  //vége
+  htmlElement += `</select>`;
+  modalContent.innerHTML = htmlElement;
+
+  //a kifálaszottt arutó -> car
+  url = `http://localhost:3000/cartoons/${id}`;
+  response = await fetch(url);
+  data = await response.json();
+  const cartoon = data.data[0];
+
+  document.getElementById("name").value = cartoon.name;
+  document.getElementById("numberOfSeasons").value = cartoon.numberOfSeasons;
+  document.getElementById("numberOfEpisodes").value = cartoon.numberOfEpisodes;
+  document.getElementById("runningTime").value = cartoon.runningTime;
+  document.getElementById("AiringStart").value = cartoon.AiringStart;
+  document.getElementById("AiringEnd").value = cartoon.AiringEnd;
+  
+  selectedCartoonId = id;
+}
+
+async function onClickSaveButton() {
+  buttonShowHide("saveButton", false);
+  buttonShowHide("yesButton", false);
+
+  //olvassuk ki az űrlap adatait
+  editableCartoon.name = document.getElementById("name").value;
+  editableCartoon.numberOfSeasons = document.getElementById("numberOfSeasons").value;
+  editableCartoon.numberOfEpisodes = document.getElementById("numberOfEpisodes").value;
+  editableCartoon.runningTime = document.getElementById("runningTime").value;
+  editableCartoon.AiringStart = document.getElementById("AiringStart").value;
+  editableCartoon.AiringEnd = document.getElementById("AiringEnd").value;
+  editableCartoon.countriesId = document.getElementById("countriesId").value;
+  editableCartoon.creatorsId = document.getElementById("creatorsId").value;
+
+  
+  
+  
+  // editableCar.driverId =
+  // document.getElementById("driverId").value === ""
+  // ? loadedDriverId
+  // : document.getElementById("driverId").value;
+
+  
+  // editableCar.driverId =
+  // document.getElementById("driverId").value === "null"
+  // ? null
+  // : editableCar.driverId;
+
+  
+  
+  if (state === "new") {
+    const url = "http://localhost:3000/cartoons";
+    //obj to json konverzió
+    const body = JSON.stringify(editableCartoon);
+    const config = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: body,
+    };
+    const response = await fetch(url, config);
+    console.log(editableCartoon);
+  } else if (state === "edit") {
+    const url = `http://localhost:3000/cartoons/${selectedCartoonId}`;
+    const body = JSON.stringify(editableCartoon);
+    const config = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: body,
+    };
+    const response = await fetch(url, config);
+  }
+
+  //lássuk hogy bővült a táblázat
+  getTable();
+}
+
+//ide építjük be törlés ajax kérést
+async function onClickYesButton() {
+  buttonShowHide("saveButton", false);
+  buttonShowHide("yesButton", false);
+  //Ajax kéréssel küldjünk post-ot
+  const config = {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    },
+  };
+
+  const url = `http://localhost:3000/cartoons/${selectedCartoonId}`;
+  const response = await fetch(url, config);
+  //lássuk hogy tölrődött a sor
+  getTable();
+}
+
+function onClickCancelButton() {
+  //Eltünteti: Save, és Yes gombokat
+  buttonShowHide("saveButton", false);
+  buttonShowHide("yesButton", false);
+}
+
+function buttonShowHide(buttonId, ShowHide) {
+  const button = document.getElementById(buttonId);
+  if (ShowHide) {
+    //megjelenít
+    button.classList.remove("d-none");
+  } else {
+    //Eltüntet
+    button.classList.add("d-none");
+  }
 }
