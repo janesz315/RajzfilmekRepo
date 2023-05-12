@@ -550,45 +550,51 @@ async function onClickEditButton(id) {
   let url = "http://localhost:3000/cartoons";
   let response = await fetch(url);
   let data = await response.json();
-  const drivers = data.data;
-
+  
   state = "edit";
   modalTitle.innerHTML = "You are currently editing the cartoon";
   buttonShowHide("saveButton", true);
 
   let htmlElement = `
   <div class="col-12">
-      <label for="name" class="form-label">Autó neve:</label>
-      <input type="text" class="form-control" id="name">
-  </div>
-  
-  <div class="col-6">
-      <label for="licenceNumber" class="form-label">Rendszám:</label>
-      <input type="text" class="form-control" id="licenceNumber">
-  </div>
-  <div class="col-5">
-      <label for="hourlyRate" class="form-label">Tarifa (Ft/óra):</label>
-      <input type="number" class="form-control" id="hourlyRate">
-  </div>
-  
-
-  <div class="form-check col-6">
-      <input class="form-check-input" type="checkbox" value="" id="outOfTraffic">
-      <label class="form-check-label" for="outOfTraffic">
-      Forgamon kívül
-      </label>
-  </div>
-
-  <select class="form-select" aria-label="Default select example" id="driverId">
-      <option value="null">Nincs sofőr</option>
+        <label for="name" class="form-label">The cartoon name:</label>
+        <input type="text" class="form-control" id="name">
+    </div>
+    
+    <div class="col-6">
+        <label for="numberOfSeasons" class="form-label">Number of Seasons:</label>
+        <input type="number" class="form-control" id="numberOfSeasons">
+    </div>
+    <div class="col-5">
+        <label for="numberOfEpisodes" class="form-label">Number of episodes:</label>
+        <input type="number" class="form-control" id="numberOfEpisodes">
+    </div>
+    <div class="col-5">
+        <label for="runningTime" class="form-label">Running time (of one episode):</label>
+        <input type="number" class="form-control" id="runningTime">
+    </div>
+    <div class="col-5">
+        <label for="AiringStart" class="form-label">When it started:</label>
+        <input type="date" class="form-control" id="AiringStart">
+    </div>
+    <div class="col-5">
+        <label for="AiringEnd" class="form-label">When it ended:</label>
+        <input type="date" class="form-control" id="AiringEnd">
+    </div>
+    <div class="col-5">
+        <label for="countriesId" class="form-label">Country ID:</label>
+        <input type="number" class="form-control" id="countriesId">
+    </div>
+    <div class="col-5">
+        <label for="creatorsId" class="form-label">Creator ID:</label>
+        <input type="number" class="form-control" id="creatorsId">
+    
   `;
   // ciklus
-  for (const driver of drivers) {
-    htmlElement += `<option value="${driver.id}">${driver.driverName}</option>`;
-  }
+  
 
   //vége
-  htmlElement += `</select>`;
+  htmlElement += `</div>`;
   modalContent.innerHTML = htmlElement;
 
   //a kifálaszottt arutó -> car
@@ -603,6 +609,8 @@ async function onClickEditButton(id) {
   document.getElementById("runningTime").value = cartoon.runningTime;
   document.getElementById("AiringStart").value = cartoon.AiringStart;
   document.getElementById("AiringEnd").value = cartoon.AiringEnd;
+  document.getElementById("countriesId").value = cartoon.countriesId;
+  document.getElementById("creatorsId").value = cartoon.countriesId;
   
   selectedCartoonId = id;
 }
