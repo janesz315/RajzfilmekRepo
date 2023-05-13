@@ -610,7 +610,7 @@ async function onClickEditButton(id) {
   document.getElementById("AiringStart").value = cartoon.AiringStart;
   document.getElementById("AiringEnd").value = cartoon.AiringEnd;
   document.getElementById("countriesId").value = cartoon.countriesId;
-  document.getElementById("creatorsId").value = cartoon.countriesId;
+  document.getElementById("creatorsId").value = cartoon.creatorsId;
   
   selectedCartoonId = id;
 }
