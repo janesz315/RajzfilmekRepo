@@ -310,7 +310,7 @@ async function getCards() {
 
   //vizualizáljuk
   let htmlElement = `
-    <h1>Kártyák</h1>
+    <h1>Cards</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }' >
       <!-- ezt ismételgetjük -->
     `;
@@ -334,7 +334,7 @@ async function getCards() {
               onclick="onClickCardButton(${cartoon.id})"  
 
             >
-              Részletek
+              Details
             </button>
       
           </div>
@@ -359,7 +359,7 @@ async function getCards2() {
 
   //vizualizáljuk
   let htmlElement = `
-    <h1>Kártyák</h1>
+    <h1>Cards</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }' >
       <!-- ezt ismételgetjük -->
     `;
@@ -368,11 +368,11 @@ async function getCards2() {
     htmlElement += `
         <div class="col">
         <div class="card">
-          <img src="./images/countries/${country.name}.jpg" class="card-img-top" alt="...">
+          <img src="./images/countries/${country.name}.svg" class="card-img-top" alt="..."  style="width:400px;height:300px;">
           <div class="card-body">
             <h5 class="card-title">${country.name}</h5>
             <ul>
-              <li>${country.name}</li>
+              
             </ul>
 
             <button
@@ -383,7 +383,7 @@ async function getCards2() {
               onclick="onClickCardButton2(${country.id})"  
 
             >
-              Részletek
+              Details
             </button>
       
           </div>
@@ -408,7 +408,7 @@ async function getCards3() {
 
   //vizualizáljuk
   let htmlElement = `
-    <h1>Kártyák</h1>
+    <h1>Cards</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" data-masonry='{"percentPosition": true }' >
       <!-- ezt ismételgetjük -->
     `;
@@ -417,11 +417,11 @@ async function getCards3() {
     htmlElement += `
         <div class="col">
         <div class="card">
-          <img src="./images/creators/${creator.name}.jpg" class="card-img-top" alt="...">
+          <img src="./images/creators/${creator.name}.jpg" class="card-img-top" alt="..."tyle="width:400px;height:300px;">
           <div class="card-body">
             <h5 class="card-title">${creator.name}</h5>
             <ul>
-              <li>${creator.name}</li>
+              
             </ul>
 
             <button
@@ -432,7 +432,7 @@ async function getCards3() {
               onclick="onClickCardButton3(${creator.id})"  
 
             >
-              Részletek
+              Details
             </button>
       
           </div>
