@@ -29,7 +29,12 @@ app.get("/cartoons", (req, res) => {
       sendingInfo(res, 0, "server error", [], 403)
       return;
     }
-    const sql = "SELECT * FROM cartoons";
+    const sql =  `
+    SELECT cartoons.id, cartoons.name,numberOfSeasons,numberOfEpisodes,countries.name countriesId,creators.name creatorsId,runningTime,DATE_FORMAT(AiringStart, '%Y. %m. %d') AiringStart, DATE_FORMAT(AiringEnd, '%Y. %m. %d') AiringEnd FROM cartoons
+    INNER JOIN countries on countriesId = countries.id
+    INNER JOIN creators on creatorsId = creators.id
+;
+    `;
     connection.query(sql, (error, results, fields) => {
       sendingGet(res, error, results);
     });
@@ -150,6 +155,28 @@ app.delete("/cartoons/:id", (req, res) => {
   `;
     connection.query(sql, [id], (error, results, fields) => {
       sendingDelete(res, error, results, id)
+    });
+    connection.release();
+  });
+});
+
+app.get("/countrycreatorAbc", (req, res) => {
+  let sql = `SELECT co.id, co.name ,cr.id , cr.name FROM countries co
+  INNER JOIN creators cr on co.id = cr.id
+  order by cr.name, co.name`;
+
+  pool.getConnection(function (error, connection) {
+    if (error) {
+      sendingGetError(res, "Server connecting error!");
+      return;
+    }
+    connection.query(sql, async function (error, results, fields) {
+      if (error) {
+        message = "Datas sql error";
+        sendingGetError(res, message);
+        return;
+      }
+      sendingGet(res, null, results);
     });
     connection.release();
   });

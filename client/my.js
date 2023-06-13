@@ -119,8 +119,8 @@ async function getTable() {
                   <th>Running time</th>
                   <th>Airing start</th>
                   <th>Airing end</th>
-                  <th>Country id</th>
-                  <th>Creator id</th>
+                  <th>Country name</th>
+                  <th>Creator name</th>
                 </tr>
           </thead>
           <tbody>
@@ -191,7 +191,7 @@ async function getTable2(params) {
                       </button>
                   </th>
                   <th>Name</th>
-                  <th>Id</th>
+                  
                   
                 </tr>
           </thead>
@@ -220,7 +220,7 @@ async function getTable2(params) {
                       </button>
                   </td>
                   <td>${country.name}</td>
-                  <td>${country.id}</td>
+                  
                   
               </tr>
           `;
@@ -258,7 +258,7 @@ async function getTable3(params) {
                       </button>
                   </th>
                   <th>Name</th>
-                  <th>Id</th>
+                  
                   
                 </tr>
           </thead>
@@ -287,7 +287,7 @@ async function getTable3(params) {
                       </button>
                   </td>
                   <td>${creator.name}</td>
-                  <td>${creator.id}</td>
+                  
                   
               </tr>
           `;
@@ -517,10 +517,10 @@ async function onClickNewButton() {
   state = "new";
   modalTitle.innerHTML = "A new record of a cartoon";
   buttonShowHide("saveButton", true);
-  const url = "http://localhost:3000/cartoons";
+  const url = "http://localhost:3000/countrycreatorAbc";
   const response = await fetch(url);
   const data = await response.json();
-  const cartoon = data.data
+  const cartoons = data.data
   
   
 
@@ -550,24 +550,37 @@ async function onClickNewButton() {
         <label for="AiringEnd" class="form-label">When it ended:</label>
         <input type="date" class="form-control" id="AiringEnd">
     </div>
-    <div class="col-5">
-        <label for="countriesId" class="form-label">Country ID:</label>
-        <input type="number" class="form-control" id="countriesId">
-    </div>
-    <div class="col-5">
-        <label for="creatorsId" class="form-label">Creator ID:</label>
-        <input type="number" class="form-control" id="creatorsId">
+    <select class="form-select" aria-label="Default select example" id="countriesId">
+        <option value="null">No country</option>
+
+    </select>
+    <select class="form-select" aria-label="Default select example" id="creatorsId">
+        <option value="null">No creator</option>
+      
     
     
 
     
     `;
+
+    for (const cartoon of cartoons) {
+      
+      htmlElement+= `
+      <option value="${cartoon.id}">${cartoon.name}</option>
+      
+
+    
+      `
+        
+    
+    }
+    
   
   
   
 
   //vége
-  htmlElement += `</div>`;
+  htmlElement += `</select>`;
 
   modalContent.innerHTML = htmlElement;
 }
