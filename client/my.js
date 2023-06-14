@@ -517,10 +517,16 @@ async function onClickNewButton() {
   state = "new";
   modalTitle.innerHTML = "A new record of a cartoon";
   buttonShowHide("saveButton", true);
-  const url = "http://localhost:3000/countrycreatorAbc";
-  const response = await fetch(url);
-  const data = await response.json();
-  const cartoons = data.data
+  let url = "http://localhost:3000/countriesAbc";
+  let response = await fetch(url);
+  let data = await response.json();
+  const countries = data.data
+
+  
+  url = "http://localhost:3000/creatorsAbc";
+  response = await fetch(url);
+  data = await response.json();
+  const creators = data.data
   
   
 
@@ -550,12 +556,8 @@ async function onClickNewButton() {
         <label for="AiringEnd" class="form-label">When it ended:</label>
         <input type="date" class="form-control" id="AiringEnd">
     </div>
-    <select class="form-select" aria-label="Default select example" id="countriesId">
+    <select class="form-select my-3" aria-label="Default select example" id="countriesId">
         <option value="null">No country</option>
-
-    </select>
-    <select class="form-select" aria-label="Default select example" id="creatorsId">
-        <option value="null">No creator</option>
       
     
     
@@ -563,10 +565,10 @@ async function onClickNewButton() {
     
     `;
 
-    for (const cartoon of cartoons) {
+    for (const country of countries) {
       
       htmlElement+= `
-      <option value="${cartoon.id}">${cartoon.name}</option>
+      <option value="${country.id}">${country.name}</option>
       
 
     
@@ -578,17 +580,31 @@ async function onClickNewButton() {
   
   
   
+    
 
+ //vége
+ htmlElement += `</select>`;
+ 
+ htmlElement+= `
+ <select class="form-select" aria-label="Default select example" id="creatorsId">
+ <option value="null">No creator</option>
+ 
+ `;
+ for (const creator of creators) {
+  htmlElement+= `
+ <option value="${creator.id}">${creator.name}</option>
+ `
+}
   //vége
   htmlElement += `</select>`;
 
   modalContent.innerHTML = htmlElement;
 }
-async function onClickNewButton3() {
-  state = "new";
-  modalTitle.innerHTML = "A new record of a creator";
+async function onClickNewButton2() {
+  state = "new2";
+  modalTitle.innerHTML = "A new record of a country";
   buttonShowHide("saveButton", true);
-  const url = "http://localhost:3000/creators";
+  const url = "http://localhost:3000/countries";
   const response = await fetch(url);
   const data = await response.json();
   const cartoon = data.data
@@ -597,7 +613,7 @@ async function onClickNewButton3() {
 
   let htmlElement = `
     <div class="col-12">
-        <label for="name" class="form-label">The creator name:</label>
+        <label for="name" class="form-label">The country's name:</label>
         <input type="text" class="form-control" id="name">
     
     
@@ -612,11 +628,11 @@ async function onClickNewButton3() {
 
   modalContent.innerHTML = htmlElement;
 }
-async function onClickNewButton2() {
-  state = "new";
-  modalTitle.innerHTML = "A new record of a country";
+async function onClickNewButton3() {
+  state = "new3";
+  modalTitle.innerHTML = "A new record of a creator";
   buttonShowHide("saveButton", true);
-  const url = "http://localhost:3000/countries";
+  const url = "http://localhost:3000/creators";
   const response = await fetch(url);
   const data = await response.json();
   const cartoon = data.data
@@ -625,7 +641,7 @@ async function onClickNewButton2() {
 
   let htmlElement = `
     <div class="col-12">
-        <label for="name" class="form-label">The country's name:</label>
+        <label for="name" class="form-label">The creator name:</label>
         <input type="text" class="form-control" id="name">
     
     
@@ -665,9 +681,17 @@ function onClickDeleteButton3(id) {
 
 async function onClickEditButton(id) {
   //sofőrök beolvasása -> drivers
-  let url = "http://localhost:3000/cartoons";
+  
+  let url = "http://localhost:3000/countriesAbc";
   let response = await fetch(url);
   let data = await response.json();
+  const countries = data.data
+
+  
+  url = "http://localhost:3000/creatorsAbc";
+  response = await fetch(url);
+  data = await response.json();
+  const creators = data.data
   
   state = "edit";
   modalTitle.innerHTML = "You are currently editing the cartoon";
@@ -699,20 +723,48 @@ async function onClickEditButton(id) {
         <label for="AiringEnd" class="form-label">When it ended:</label>
         <input type="date" class="form-control" id="AiringEnd">
     </div>
-    <div class="col-5">
-        <label for="countriesId" class="form-label">Country ID:</label>
-        <input type="number" class="form-control" id="countriesId">
-    </div>
-    <div class="col-5">
-        <label for="creatorsId" class="form-label">Creator ID:</label>
-        <input type="number" class="form-control" id="creatorsId">
+    <select class="form-select my-3" aria-label="Default select example" id="countriesId">
+        <option value="null">No country</option>
+      
     
-  `;
-  // ciklus
-  
+    
 
+    
+    `;
+
+    for (const country of countries) {
+      
+      htmlElement+= `
+      <option value="${country.id}">${country.name}</option>
+      
+
+    
+      `
+        
+    
+    }
+    
+  
+  
+  
+    
+
+ //vége
+ htmlElement += `</select>`;
+ 
+ htmlElement+= `
+ <select class="form-select" aria-label="Default select example" id="creatorsId">
+ <option value="null">No creator</option>
+ 
+ `;
+ for (const creator of creators) {
+  htmlElement+= `
+ <option value="${creator.id}">${creator.name}</option>
+ `
+}
   //vége
-  htmlElement += `</div>`;
+  htmlElement += `</select>`;
+
   modalContent.innerHTML = htmlElement;
 
   //a kifálaszottt arutó -> car
@@ -738,7 +790,7 @@ async function onClickEditButton2(id) {
   let response = await fetch(url);
   let data = await response.json();
   
-  state = "edit";
+  state = "edit2";
   modalTitle.innerHTML = "You are currently editing the country";
   buttonShowHide("saveButton", true);
 
@@ -756,7 +808,7 @@ async function onClickEditButton2(id) {
   modalContent.innerHTML = htmlElement;
 
   //a kifálaszottt arutó -> car
-  url = `http://localhost:3000/country/${id}`;
+  url = `http://localhost:3000/countries/${id}`;
   response = await fetch(url);
   data = await response.json();
   const country = data.data[0];
@@ -773,7 +825,7 @@ async function onClickEditButton3(id) {
   let response = await fetch(url);
   let data = await response.json();
   
-  state = "edit";
+  state = "edit3";
   modalTitle.innerHTML = "You are currently editing the creator";
   buttonShowHide("saveButton", true);
 
@@ -808,6 +860,8 @@ async function onClickSaveButton() {
 
   //olvassuk ki az űrlap adatait
   editableCartoon.name = document.getElementById("name").value;
+  editableCountry.name = document.getElementById("name").value;
+  editableCreator.name = document.getElementById("name").value;
   editableCartoon.numberOfSeasons = document.getElementById("numberOfSeasons").value;
   editableCartoon.numberOfEpisodes = document.getElementById("numberOfEpisodes").value;
   editableCartoon.runningTime = document.getElementById("runningTime").value;
@@ -815,6 +869,8 @@ async function onClickSaveButton() {
   editableCartoon.AiringEnd = document.getElementById("AiringEnd").value;
   editableCartoon.countriesId = document.getElementById("countriesId").value;
   editableCartoon.creatorsId = document.getElementById("creatorsId").value;
+  
+
 
   
   
@@ -856,26 +912,29 @@ async function onClickSaveButton() {
       body: body,
     };
     const response = await fetch(url, config);
-  }
-
-  //lássuk hogy bővült a táblázat
-  getTable();
-}
-async function onClickSaveButton2() {
-  buttonShowHide("saveButton", false);
-  buttonShowHide("yesButton", false);
-
-  //olvassuk ki az űrlap adatait
-  editableCountry.name = document.getElementById("name").value;
-  
-
-  
-  
-  
-  
-  
-  
-  if (state === "new") {
+  } else if (state === "edit2") {
+    const url = `http://localhost:3000/countries/${selectedCountryId}`;
+    const body = JSON.stringify(editableCountry);
+    const config = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: body,
+    };
+    const response = await fetch(url, config);
+  } else if (state === "edit3") {
+    const url = `http://localhost:3000/creators/${selectedCreatorId}`;
+    const body = JSON.stringify(editableCreator);
+    const config = {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: body,
+    };
+    const response = await fetch(url, config);
+  } else if (state === "new2") {
     const url = "http://localhost:3000/countries";
     //obj to json konverzió
     const body = JSON.stringify(editableCountry);
@@ -887,33 +946,8 @@ async function onClickSaveButton2() {
       body: body,
     };
     const response = await fetch(url, config);
-    console.log(editableCountry);
-  } else if (state === "edit") {
-    const url = `http://localhost:3000/country/${selectedCountryId}`;
-    const body = JSON.stringify(editableCountry);
-    const config = {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: body,
-    };
-    const response = await fetch(url, config);
-  }
-
-  //lássuk hogy bővült a táblázat
-  getTable();
-}
-async function onClickSaveButton3() {
-  buttonShowHide("saveButton", false);
-  buttonShowHide("yesButton", false);
-
-  //olvassuk ki az űrlap adatait
-  editableCreator.name = document.getElementById("name").value;
-  
-
-  
-  if (state === "new") {
+    
+  } else if (state === "new3") {
     const url = "http://localhost:3000/creators";
     //obj to json konverzió
     const body = JSON.stringify(editableCreator);
@@ -925,22 +959,14 @@ async function onClickSaveButton3() {
       body: body,
     };
     const response = await fetch(url, config);
-    console.log(editableCreator);
-  } else if (state === "edit") {
-    const url = `http://localhost:3000/creators/${selectedCreatorId}`;
-    const body = JSON.stringify(editableCreator);
-    const config = {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: body,
-    };
-    const response = await fetch(url, config);
+    
   }
+
 
   //lássuk hogy bővült a táblázat
   getTable();
+  getTable2();
+  getTable3();
 }
 
 

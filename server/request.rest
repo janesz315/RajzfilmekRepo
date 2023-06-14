@@ -3,10 +3,8 @@
 get http://localhost:3000/cartoons
 
 
-###
-get http://localhost:3000/countrycreatorAbc
 ### get cartoons by id
-get http://localhost:3000/cartoons/10
+get http://localhost:3000/cartoons/9
 
 
 
@@ -50,6 +48,8 @@ get http://localhost:3000/countries
 
 
 
+### get countries abc
+GET http://localhost:3000/countriesAbc
 
 ### get countries by id
 get http://localhost:3000/countries/10
@@ -80,7 +80,8 @@ Content-Type: application/json
 get http://localhost:3000/creators
 
 
-
+### get creators abc
+get http://localhost:3000/creatorsAbc
 
 ### get creators by id
 get http://localhost:3000/creators/10

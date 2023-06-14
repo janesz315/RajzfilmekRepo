@@ -30,7 +30,7 @@ app.get("/cartoons", (req, res) => {
       return;
     }
     const sql =  `
-    SELECT cartoons.id, cartoons.name,numberOfSeasons,numberOfEpisodes,countries.name countriesId,creators.name creatorsId,runningTime,DATE_FORMAT(AiringStart, '%Y. %m. %d') AiringStart, DATE_FORMAT(AiringEnd, '%Y. %m. %d') AiringEnd FROM cartoons
+    SELECT cartoons.id, cartoons.name,numberOfSeasons,numberOfEpisodes,countries.name countriesId,creators.name creatorsId,runningTime,DATE_FORMAT(AiringStart, '%Y-%m-%d') AiringStart, DATE_FORMAT(AiringEnd, '%Y-%m-%d') AiringEnd FROM cartoons
     INNER JOIN countries on countriesId = countries.id
     INNER JOIN creators on creatorsId = creators.id
 ;
@@ -55,7 +55,8 @@ app.get("/cartoons/:id", (req, res) => {
     //   `;
     const sql = `
     SELECT * FROM cartoons
-  WHERE id = ?
+      WHERE id = ?
+      ;
   `;
     connection.query(sql, [id], (error, results, fields) => {
       sendingGetById(res, error, results, id)
@@ -198,6 +199,24 @@ app.get("/countries", (req, res) => {
     connection.release();
   });
 });
+app.get("/countriesAbc", (req, res) => {
+  pool.getConnection(function (error, connection) {
+    if (error) {
+      sendingInfo(res, 0, "server error", [], 403)
+      return;
+    }
+    const sql =  `
+    SELECT name, id from countries
+  order by name;
+;
+    `;
+    connection.query(sql, (error, results, fields) => {
+      sendingGet(res, error, results);
+    });
+    connection.release();
+  });
+});
+
 
 app.get("/countries/:id", (req, res) => {
   const id = req.params.id;
@@ -307,6 +326,24 @@ app.get("/creators", (req, res) => {
       return;
     }
     const sql = "SELECT * FROM creators";
+    connection.query(sql, (error, results, fields) => {
+      sendingGet(res, error, results);
+    });
+    connection.release();
+  });
+});
+
+app.get("/creatorsABC", (req, res) => {
+  pool.getConnection(function (error, connection) {
+    if (error) {
+      sendingInfo(res, 0, "server error", [], 403)
+      return;
+    }
+    const sql =  `
+    SELECT name, id from creators
+  order by name;
+;
+    `;
     connection.query(sql, (error, results, fields) => {
       sendingGet(res, error, results);
     });
