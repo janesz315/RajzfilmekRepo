@@ -54,8 +54,11 @@ app.get("/cartoons/:id", (req, res) => {
     // WHERE id = ${id}
     //   `;
     const sql = `
-    SELECT * FROM cartoons
-      WHERE id = ?
+    SELECT cartoons.id, cartoons.name,numberOfSeasons,numberOfEpisodes,countries.name countriesId,creators.name creatorsId,runningTime,DATE_FORMAT(AiringStart, '%Y-%m-%d') AiringStart, DATE_FORMAT(AiringEnd, '%Y-%m-%d') AiringEnd FROM cartoons
+    INNER JOIN countries on countriesId = countries.id
+    INNER JOIN creators on creatorsId = creators.id
+    WHERE cartoons.id = ?
+;
       ;
   `;
     connection.query(sql, [id], (error, results, fields) => {
