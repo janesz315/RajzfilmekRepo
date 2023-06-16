@@ -1,7 +1,7 @@
 const contentBox = document.getElementById("contentBox");
 const modalContent = document.getElementById("modalContent");
 const modalTitle = document.getElementById("modalTitle");
-
+let stateTable = null; // cartoonsTable, countriesTable,creatorsTable
 
 class Cartoon {
   constructor(
@@ -92,6 +92,7 @@ function getContact() {
 
 async function getTable() {
     state = "view";
+    stateTable = "cartoonsTable";
     //lekérjük az adatokat
     const url = "http://localhost:3000/cartoons";
     const response = await fetch(url);
@@ -169,6 +170,7 @@ async function getTable() {
   }
 async function getTable2(params) {
     state = "view";
+    stateTable = "countriesTable";
     //lekérjük az adatokat
     const url = "http://localhost:3000/countries";
     const response = await fetch(url);
@@ -235,7 +237,8 @@ async function getTable2(params) {
   }
 
 async function getTable3(params) {
-  state = "view";
+    state = "view";
+    stateTable = "creatorsTable";
     //lekérjük az adatokat
     const url = "http://localhost:3000/creators";
     const response = await fetch(url);
@@ -665,14 +668,14 @@ function onClickDeleteButton(id) {
   selectedCartoonId = id;
 }
 function onClickDeleteButton2(id) {
-  state = "delete";
+  state = "delete2";
   modalTitle.innerHTML = "country deletion";
   modalContent.innerHTML = "Do you really want that?";
   buttonShowHide("yesButton", true);
   selectedCountryId = id;
 }
 function onClickDeleteButton3(id) {
-  state = "delete";
+  state = "delete3";
   modalTitle.innerHTML = "creator deletion";
   modalContent.innerHTML = "Do you really want that?";
   buttonShowHide("yesButton", true);
@@ -859,16 +862,26 @@ async function onClickSaveButton() {
   buttonShowHide("yesButton", false);
 
   //olvassuk ki az űrlap adatait
-  editableCartoon.name = document.getElementById("name").value;
-  editableCountry.name = document.getElementById("name").value;
-  editableCreator.name = document.getElementById("name").value;
-  editableCartoon.numberOfSeasons = document.getElementById("numberOfSeasons").value;
-  editableCartoon.numberOfEpisodes = document.getElementById("numberOfEpisodes").value;
-  editableCartoon.runningTime = document.getElementById("runningTime").value;
-  editableCartoon.AiringStart = document.getElementById("AiringStart").value;
-  editableCartoon.AiringEnd = document.getElementById("AiringEnd").value;
-  editableCartoon.countriesId = document.getElementById("countriesId").value;
-  editableCartoon.creatorsId = document.getElementById("creatorsId").value;
+  if (stateTable == "cartoonsTable") {
+    editableCartoon.name = document.getElementById("name").value;
+    editableCartoon.numberOfSeasons = document.getElementById("numberOfSeasons").value;
+    editableCartoon.numberOfEpisodes = document.getElementById("numberOfEpisodes").value;
+    editableCartoon.runningTime = document.getElementById("runningTime").value;
+    editableCartoon.AiringStart = document.getElementById("AiringStart").value;
+    editableCartoon.AiringEnd = document.getElementById("AiringEnd").value;
+    editableCartoon.countriesId = document.getElementById("countriesId").value;
+    editableCartoon.creatorsId = document.getElementById("creatorsId").value;
+    
+  }
+  else if (stateTable == "countriesTable") {
+    
+    editableCountry.name = document.getElementById("name").value;
+  }
+  else if (stateTable =="creatorsTable")
+  {
+    editableCreator.name = document.getElementById("name").value;
+    
+  }
   
 
 
@@ -964,9 +977,21 @@ async function onClickSaveButton() {
 
 
   //lássuk hogy bővült a táblázat
-  getTable();
-  getTable2();
-  getTable3();
+  if (stateTable == "cartoonsTable") {
+    
+    getTable();
+  }
+  else if (stateTable == "countriesTable") {
+    
+    getTable2();
+    
+  }
+  else if (stateTable =="creatorsTable")
+  {
+   
+    getTable3();
+    
+  }
 }
 
 
@@ -976,17 +1001,61 @@ async function onClickYesButton() {
   buttonShowHide("saveButton", false);
   buttonShowHide("yesButton", false);
   //Ajax kéréssel küldjünk post-ot
+  if (state == "delete") {
   const config = {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
     },
   };
-
-  const url = `http://localhost:3000/cartoons/${selectedCartoonId}`;
+  let url = `http://localhost:3000/cartoons/${selectedCartoonId}`;
   const response = await fetch(url, config);
+  }
+  
+  else if (state == "delete2") {
+    const config = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    
+    let url = `http://localhost:3000/countries/${selectedCountryId}`;
+    const response = await fetch(url, config);
+    
+    
+  }
+  else if (state == "delete3")
+  {
+    const config = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    
+    
+    let url = `http://localhost:3000/creators/${selectedCreatorId}`;
+    const response = await fetch(url, config);
+    
+    
+  }
   //lássuk hogy tölrődött a sor
-  getTable();
+  if (stateTable == "cartoonsTable") {
+    
+    getTable();
+  }
+  else if (stateTable == "countriesTable") {
+    
+    getTable2();
+    
+  }
+  else if (stateTable =="creatorsTable")
+  {
+   
+    getTable3();
+    
+  }
 }
 
 function onClickCancelButton() {
