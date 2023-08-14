@@ -1,10 +1,21 @@
+.container-fluid {
+    background-color: saddlebrown;
+}
+.text-nowrap{
+    background-color: wheat;
+}
 .navbar {
     display: auto;
+    
+    /*position: sticky;
+    position: -webkit-sticky;
+    */
+    
 }
 #contentBox{
     border: 3px dotted maroon;
-    /* background-color: blueviolet; */
     text-decoration: aqua;
+    
 }
 .card{
     background-color: darkcyan;
@@ -13,3 +24,11 @@
 {
     background-color: royalblue;
 }
+
+.header {
+    padding: 60px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+  }
+  

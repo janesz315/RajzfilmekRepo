@@ -49,10 +49,7 @@ app.get("/cartoons/:id", (req, res) => {
       sendingInfo(res, 0, "server error", [], 403)
       return;
     }
-    //   const sql = `
-    //   SELECT * FROM cars
-    // WHERE id = ${id}
-    //   `;
+    
     const sql = `
     SELECT cartoons.id, cartoons.name,numberOfSeasons,numberOfEpisodes,countries.name countriesName, countries.id countriesId,creators.name creatorsName, creators.id creatorsId, runningTime,DATE_FORMAT(AiringStart, '%Y-%m-%d') AiringStart, DATE_FORMAT(AiringEnd, '%Y-%m-%d') AiringEnd FROM cartoons
     INNER JOIN countries on countriesId = countries.id
@@ -228,10 +225,6 @@ app.get("/countries/:id", (req, res) => {
       sendingInfo(res, 0, "server error", [], 403)
       return;
     }
-    //   const sql = `
-    //   SELECT * FROM cars
-    // WHERE id = ${id}
-    //   `;
     const sql = `
     SELECT * FROM countries
   WHERE id = ?
@@ -361,10 +354,7 @@ app.get("/creators/:id", (req, res) => {
       sendingInfo(res, 0, "server error", [], 403)
       return;
     }
-    //   const sql = `
-    //   SELECT * FROM cars
-    // WHERE id = ${id}
-    //   `;
+    
     const sql = `
     SELECT * FROM creators
   WHERE id = ?

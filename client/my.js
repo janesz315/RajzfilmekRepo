@@ -585,7 +585,7 @@ async function onClickNewButton() {
   
     
 
- //vége
+ //+ ciklus
  htmlElement += `</select>`;
  
  htmlElement+= `
@@ -683,7 +683,7 @@ function onClickDeleteButton3(id) {
 }
 
 async function onClickEditButton(id) {
-  //sofőrök beolvasása -> drivers
+  //országok és készítők beolvasása -> countriesAbc, creatorsAbc
   
   let url = "http://localhost:3000/countriesAbc";
   let response = await fetch(url);
@@ -770,7 +770,7 @@ async function onClickEditButton(id) {
 
   modalContent.innerHTML = htmlElement;
 
-  //a kifálaszottt arutó -> car
+  //a kiválasztott rajzfilm -> cartoons
   url = `http://localhost:3000/cartoons/${id}`;
   response = await fetch(url);
   data = await response.json();
@@ -788,7 +788,7 @@ async function onClickEditButton(id) {
   selectedCartoonId = id;
 }
 async function onClickEditButton2(id) {
-  //sofőrök beolvasása -> drivers
+  //országok beolvasása -> countries
   let url = "http://localhost:3000/countries";
   let response = await fetch(url);
   let data = await response.json();
@@ -803,14 +803,11 @@ async function onClickEditButton2(id) {
         <input type="text" class="form-control" id="name">
     
   `;
-  // ciklus
-  
-
   //vége
   htmlElement += `</div>`;
   modalContent.innerHTML = htmlElement;
 
-  //a kifálaszottt arutó -> car
+  //a kiválasztott ország -> country
   url = `http://localhost:3000/countries/${id}`;
   response = await fetch(url);
   data = await response.json();
@@ -823,7 +820,7 @@ async function onClickEditButton2(id) {
 }
 
 async function onClickEditButton3(id) {
-  //sofőrök beolvasása -> drivers
+  //készítők beolvasása -> creators
   let url = "http://localhost:3000/creators";
   let response = await fetch(url);
   let data = await response.json();
@@ -838,14 +835,11 @@ async function onClickEditButton3(id) {
         <input type="text" class="form-control" id="name">
     
   `;
-  // ciklus
-  
-
   //vége
   htmlElement += `</div>`;
   modalContent.innerHTML = htmlElement;
 
-  //a kifálaszottt arutó -> car
+  //a kiválasztott készítő -> creators
   url = `http://localhost:3000/creators/${id}`;
   response = await fetch(url);
   data = await response.json();
@@ -871,36 +865,16 @@ async function onClickSaveButton() {
     editableCartoon.AiringEnd = document.getElementById("AiringEnd").value;
     editableCartoon.countriesId = document.getElementById("countriesId").value;
     editableCartoon.creatorsId = document.getElementById("creatorsId").value;
-    
   }
-  else if (stateTable == "countriesTable") {
-    
+  else if (stateTable == "countriesTable") 
+  {
     editableCountry.name = document.getElementById("name").value;
   }
   else if (stateTable =="creatorsTable")
   {
     editableCreator.name = document.getElementById("name").value;
-    
   }
-  
 
-
-  
-  
-  
-  // editableCar.driverId =
-  // document.getElementById("driverId").value === ""
-  // ? loadedDriverId
-  // : document.getElementById("driverId").value;
-
-  
-  // editableCar.driverId =
-  // document.getElementById("driverId").value === "null"
-  // ? null
-  // : editableCar.driverId;
-
-  
-  
   if (state === "new") {
     const url = "http://localhost:3000/cartoons";
     //obj to json konverzió
@@ -993,9 +967,6 @@ async function onClickSaveButton() {
     
   }
 }
-
-
-
 //ide építjük be törlés ajax kérést
 async function onClickYesButton() {
   buttonShowHide("saveButton", false);
@@ -1022,9 +993,8 @@ async function onClickYesButton() {
     
     let url = `http://localhost:3000/countries/${selectedCountryId}`;
     const response = await fetch(url, config);
-    
-    
   }
+  
   else if (state == "delete3")
   {
     const config = {
@@ -1033,28 +1003,21 @@ async function onClickYesButton() {
         "content-type": "application/json",
       },
     };
-    
-    
     let url = `http://localhost:3000/creators/${selectedCreatorId}`;
     const response = await fetch(url, config);
-    
-    
   }
   //lássuk hogy tölrődött a sor
-  if (stateTable == "cartoonsTable") {
-    
+  if (stateTable == "cartoonsTable") 
+    {
     getTable();
   }
-  else if (stateTable == "countriesTable") {
-    
+  else if (stateTable == "countriesTable") 
+  { 
     getTable2();
-    
   }
   else if (stateTable =="creatorsTable")
   {
-   
     getTable3();
-    
   }
 }
 
